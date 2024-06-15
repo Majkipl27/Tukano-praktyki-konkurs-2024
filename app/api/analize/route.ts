@@ -8,7 +8,7 @@ const API_KEY = process.env.GEMINI_API_KEY || "";
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
-    const graphImage = (formData.get("graph") as File) || null;
+    const graphImage = (formData.get("graph") as Blob) || null;
 
     if (!graphImage) {
       return NextResponse.json({
@@ -19,10 +19,26 @@ export async function POST(req: Request) {
       });
     }
 
+    if (
+      !graphImage.type.startsWith("image") ||
+      graphImage.size > 3 * 1024 * 1024
+    ) {
+      return NextResponse.json({
+        status: 400,
+        body: {
+          message: "Provided file is not an image",
+        },
+      });
+    }
+
     const buffer = Buffer.from(await graphImage.arrayBuffer());
 
     let graph = await analyzeGraph(buffer);
-    graph = JSON.parse(graph.slice(7, graph.length - 3));
+    if (graph && graph.includes("```json")) {
+      graph = JSON.parse(graph.slice(7, graph.length - 3));
+    } else {
+      graph = JSON.parse(graph);
+    }
 
     const isValid: boolean | string = validateGraph(
       graph as unknown as { nodes: string[]; edges: Edge[] },
@@ -53,12 +69,7 @@ export async function POST(req: Request) {
     });
   } catch (error) {
     console.error("Error during POST:", error);
-    return NextResponse.json({
-      status: 500,
-      body: {
-        message: "Internal server error",
-      },
-    });
+    return NextResponse.error();
   }
 }
 

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Image from "next/image";
-import jungleBackground from "./Images/jungle.svg";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +17,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Image
-          priority
-          src={jungleBackground}
-          alt=""
-          className="fixed top-0 left-0 w-full -z-20 blur-md"
-        />
         {children}
       </body>
     </html>

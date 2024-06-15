@@ -41,7 +41,7 @@ export const dialogues: Dialogue = {
     ],
   },
   4: {
-    text: "Jest tam pięknie! Wszystkie zwierzęta z dżungli spotykają się tam, by się bawić i odpocząć! Dawno jej nie odwiedzałem. Chodźmy!",
+    text: "Polana jest piękna! Wszystkie zwierzęta z dżungli spotykają się tam, by się bawić i odpocząć! Dawno jej nie odwiedzałem. Chodźmy!",
     options: [
       {
         text: "(Kontynuuj)",
@@ -71,7 +71,7 @@ export const dialogues: Dialogue = {
     text: "Pamiętaj aby oznaczyć punkt w którym się znajdujemy literą S, a polanę literą P! Przydałby się też czas przejścia między punktami, w minutach, aby wybrać najoptymalniejszą drogę!",
     options: [
       {
-        text: "Podaj mapę",
+        text: "Podaj mapę (Max 3MB)",
         next: 7,
       },
       {
@@ -80,4 +80,100 @@ export const dialogues: Dialogue = {
       },
     ],
   },
+  8: {
+    text: "Świetnie! Daj mi chwilę na przeanalizowanie mapy! (Request został wysłany, więc to może chwilę potrwać)",
+    options: [],
+  },
+  9: {
+    text: "",
+    options: [
+      {
+        text: "(Kontynuuj)",
+        next: 10,
+      },
+    ],
+  },
+  9.5: {
+    text: "",
+    options: [
+      {
+        text: "(Kontynuuj)",
+        next: 10,
+      },
+    ],
+  },
+  10: {
+    text: "Wydaje mi się, że ta mapa może być nieco zbyt skomplikowana dla mnie. Może spróbujesz narysować ją jeszcze raz? (możesz też sprawdzić consolę czy nie wysypało błędu)",
+    options: [
+      {
+        text: "(Kontynuuj)",
+        next: 7,
+      },
+    ],
+  },
+  10.5: {
+    text: "",
+    options: [
+      {
+        text: "(Kontynuuj)",
+        next: 11,
+      },
+    ],
+  },
+  11: {
+    text: "",
+    options: [
+      {
+        text: "(Kontynuuj)",
+        next: 12,
+      },
+    ],
+  },
+  12: {
+    text: "Komu w drogę temu czas!",
+    options: [
+      {
+        text: "Wyruszajmy!",
+        next: 13,
+      },
+    ],
+  },
+  13: {
+    text: "",
+    options: [
+      {
+        text: "(Kontynuuj)",
+        next: 14,
+      },
+    ],
+  },
+  14: {
+    text: "Jesteśmy na miejscu.",
+    options: [
+      {
+        text: "Dzięki za pomoc! Tutaj jest na prawdę pięknie!",
+        next: 15,
+      },
+    ],
+  },
+  15: {
+    text: "Nie ma sprawy! Miło było znowu odwiedzić to miejsce! Do zobaczenia!",
+    options: [],
+  },
 };
+
+export async function fetchPath(
+  map: File
+): Promise<number | { distance: number; path: string[] }> {
+  const formData = new FormData();
+  formData.append("graph", map);
+  const response = await fetch("/api/analize", {
+    method: "POST",
+    body: formData,
+  });
+  if (!response.ok) return 400;
+  const data = await response.json();
+
+  if (data.status !== 200) return 400;
+  return data.body.message;
+}
