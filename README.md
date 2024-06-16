@@ -56,7 +56,7 @@ localhost:3000
 ```
 ## Informacje dla tukano:
 
-Plik zmiennych środowiskowych,  z działającym kluczem do gemini api, został załączony do dostarczonego e-maila. Załączyłem także plik ze strukturą bazy danych, dla łatwego jej przywrócenia.
+Plik zmiennych środowiskowych, z działającym kluczem do gemini api, został załączony do dostarczonego e-maila. Ważne! Po pobraniu pliku, może się okazać, że kropka z początku zniknęła, proszę ją dodać, aby nazwą pliku było .env. Załączyłem także plik ze strukturą bazy danych, dla łatwego jej przywrócenia.
 
 
 
