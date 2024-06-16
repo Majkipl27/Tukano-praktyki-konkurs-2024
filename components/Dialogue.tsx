@@ -40,12 +40,17 @@ export default function Dialogue() {
   >([]);
   const [isCommunityMapsOpen, setIsCommunityMapsOpen] =
     useState<boolean>(false);
+  const [isPathBeingFetched, setIsPathBeingFetched] = useState<boolean>(false);
 
   useEffect(() => {
     if (!hasChosenOption) {
       setDialogueText("");
     }
     if (dialogueNumber === 11) {
+      if (!path?.distance || !path?.path) {
+        setDialogueNumber(10);
+        return;
+      }
       setDialogueText(
         `Najkrótsza ścieżka ma długość ${
           path?.distance
@@ -72,13 +77,16 @@ export default function Dialogue() {
     async function fetchPathFromAPI() {
       if (map === null) return;
       setDialogueNumber(8);
+      setIsPathBeingFetched(true);
       const res: number | { distance: number; path: string[] } =
         await fetchPath(map);
-      if (typeof res === "number") {
+      if (typeof res === "number" || !res?.distance || !res?.path) {
+        setIsPathBeingFetched(false);
         setDialogueNumber(9.5);
         return;
       } else {
         setPath(res as { distance: number; path: string[] });
+        setIsPathBeingFetched(false);
         setDialogueNumber(10.5);
         return;
       }
@@ -109,7 +117,7 @@ export default function Dialogue() {
       )}
       <Typewriter text={dialogueText} speed={50} setIsTyping={setIsTyping} />
       <div className="flex items-center sm:justify-end justify-center sm:*:!w-fit *:!w-full flex-wrap md:text-lg sm:text-sm space-x-2">
-        {isTyping ? null : dialogueNumber === 7 ? (
+        {isTyping ? null : isPathBeingFetched ? null : dialogueNumber === 7 ? (
           <>
             <label
               htmlFor="mapa"

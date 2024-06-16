@@ -30,7 +30,7 @@ export function CommunityMaps({
                   src={`data:image/png;base64,${Buffer.from(map.data).toString(
                     "base64"
                   )}`}
-                  className="xl:max-w-96 w-full"
+                  className="xl:max-w-96 w-full bg-white"
                 />
                 <button
                   onClick={() => {

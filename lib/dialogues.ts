@@ -194,7 +194,7 @@ export async function publishMap(
   if (!response.ok) return 400;
   const data = await response.json();
 
-  if (data.status !== 200) return 400;
+  if (data.status !== 201) return 400;
   return data.body.message;
 }
 

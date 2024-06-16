@@ -68,6 +68,7 @@ export default function Canvas({
       <DialogContent>
         <p>Disclaimer: Gemini AI może nie analizować rysunku poprawnie</p>
         <p>Disclaimer 2: Na telefonie nie wygodnie się rysuje</p>
+        <p>Tip: Przytrzymaj CTRL i lewy przycisk myszy aby móc przesuwać widok płótna</p>
         <div className="flex items-center justify-center gap-4">
           <button
             onClick={clear}

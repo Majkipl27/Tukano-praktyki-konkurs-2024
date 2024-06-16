@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Instalacja
 
-## Getting Started
+W prawym górnym roku kliknij przycisk clone. Następnie skopiuj link który zostanie ci podany i do terminala wklej komendę git clone <link>, gdzie w miejsce link, wstaw skopiowany link. Upewnij się, że masz zainstalowane narzędzie git, jak i narzędzie npm i nodejs.
 
-First, run the development server:
+## Instalacja bibliotek
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+W tym samym terminalu, wejdź w folder, gdzie zostało skopiowane repozytorium. Następnie wywołaj komendę aby zainstalować niezbędne pakiety:
+```
+npm i
+```
+lub
+```
+pnpm i
+```
+W zależności, z którego menadżera pakietów nodejs korzystasz.
+
+## Stwórz bazę danych
+
+Stwórz bazę danych mariadb, która zawiera tabelę maps, definiowaną w następujący sposób:
+```
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int(11)      | NO   | PRI | NULL    | auto_increment |
+| data     | blob         | YES  |     | NULL    |                |
+| distance | int(11)      | YES  |     | NULL    |                |
+| path     | varchar(255) | YES  |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Dodaj zmienne środowiskowe
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Aby projekt działał poprawnie, upewnij się, że posiadasz odpowiednie zmienne środowiskowe. Przykładowy plik 
+.env powinien wyglądać tak:
+```
+GEMINI_API_KEY=<klucz api gemini ai>
+DB_HOST=<host bazy danych>
+DB_USER=<użytkownik bazy danych>
+DB_PASS=<hasło użytkownika bazy danych>
+DB_NAME=<nazwa bazy danych, z której będziesz korzystać>
+```
+Plik ten umieść w głównym katalogu folderu.
 
-## Learn More
+## Uruchamianie aplikacji
+W oknie terminala, w ścieżce folderu projektu, wywołaj komendę:
+```
+npm run dev
+```
+upewniając się jednak, że powyższe kroki zostały spełnione. Jeśli wszystko zadziałą poprawnie, projekt powinien uruchomić się pod adresem: 
+```
+localhost:3000
+```
+## Informacje dla tukano:
 
-To learn more about Next.js, take a look at the following resources:
+Plik zmiennych środowiskowych,  z działającym kluczem do gemini api, został załączony do dostarczonego e-maila. Załączyłem także plik ze strukturą bazy danych, dla łatwego jej przywrócenia.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
