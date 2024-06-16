@@ -40,7 +40,7 @@ DB_USER=<użytkownik bazy danych>
 DB_PASS=<hasło użytkownika bazy danych>
 DB_NAME=<nazwa bazy danych, z której będziesz korzystać>
 ```
-Plik ten umieść w głównym katalogu folderu.
+Plik ten umieść w głównym katalogu projektu.
 
 ## Uruchamianie aplikacji
 W oknie terminala, w ścieżce folderu projektu, wywołaj komendę:
