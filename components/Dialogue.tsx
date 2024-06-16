@@ -2,10 +2,11 @@
 
 import { dialogueNumberAtom, isOnPolanaAtom } from "@/lib/atoms";
 import { useAtom, useSetAtom } from "jotai";
-import { dialogues, fetchPath } from "@/lib/dialogues";
+import { dialogues, fetchMaps, fetchPath, publishMap } from "@/lib/dialogues";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useTypewriter } from "@/lib/useTypewriter";
 import Canvas from "./Canvas";
+import { CommunityMaps } from "./CommunityMaps";
 
 const Typewriter = ({
   text,
@@ -34,6 +35,11 @@ export default function Dialogue() {
   const [path, setPath] = useState<{ distance: number; path: string[] } | null>(
     null
   );
+  const [maps, setMaps] = useState<
+    { id: number; data: Buffer; distance: number; path: string }[]
+  >([]);
+  const [isCommunityMapsOpen, setIsCommunityMapsOpen] =
+    useState<boolean>(false);
 
   useEffect(() => {
     if (!hasChosenOption) {
@@ -46,12 +52,15 @@ export default function Dialogue() {
         } i prowadzi kolejno przez wierzchołki: ${path?.path.join(", ")}`
       );
       return;
-    } else if (dialogueNumber === 13) {
+    } else if (dialogueNumber === 12 && !map) {
+      setDialogueNumber(13);
+      return;
+    } else if (dialogueNumber === 14) {
       setDialogueText(
         `(Idziecie z Tukanem Tomkiem przez dżunglę przez ${path?.distance} minut.)`
       );
       return;
-    } else if (dialogueNumber === 14) {
+    } else if (dialogueNumber === 15) {
       setIsOnPolana(true);
     }
     setDialogueText(dialogues[dialogueNumber].text);
@@ -77,10 +86,26 @@ export default function Dialogue() {
     fetchPathFromAPI();
   }, [map]);
 
+  useEffect(() => {
+    async function fetchMapsFromAPI() {
+      const res = await fetchMaps();
+      if (res) setMaps(res);
+    }
+    fetchMapsFromAPI();
+  }, []);
+
   return (
     <div className="w-full h-full flex flex-col justify-between">
       {isDrawOpen && (
         <Canvas setIsOpen={setIsDrawOpen} isOpen={isDrawOpen} setMap={setMap} />
+      )}
+      {isCommunityMapsOpen && (
+        <CommunityMaps
+          isOpen={isCommunityMapsOpen}
+          setIsOpen={setIsCommunityMapsOpen}
+          setPath={setPath}
+          maps={maps}
+        />
       )}
       <Typewriter text={dialogueText} speed={50} setIsTyping={setIsTyping} />
       <div className="flex items-center justify-end gap-4">
@@ -111,6 +136,34 @@ export default function Dialogue() {
               className="block w-fit p-2 my-2 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg"
             >
               Narysuj mapę
+            </button>
+            <button
+              onClick={() => {
+                setIsCommunityMapsOpen(true);
+              }}
+              className="block w-fit p-2 my-2 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg"
+            >
+              Wyszukaj z map użytkowników
+            </button>
+          </>
+        ) : dialogueNumber === 12 ? (
+          <>
+            <button
+              onClick={() => {
+                if (map) publishMap(map);
+                setDialogueNumber(13);
+              }}
+              className="block w-fit p-2 my-2 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg"
+            >
+              Jasne!
+            </button>
+            <button
+              onClick={() => {
+                setDialogueNumber(13);
+              }}
+              className="block w-fit p-2 my-2 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg"
+            >
+              Może lepiej nie!
             </button>
           </>
         ) : (

@@ -68,7 +68,7 @@ export const dialogues: Dialogue = {
     ],
   },
   7: {
-    text: "Pamiętaj aby oznaczyć punkt w którym się znajdujemy literą S, a polanę literą P! Przydałby się też czas przejścia między punktami, w minutach, aby wybrać najoptymalniejszą drogę!",
+    text: "Pamiętaj aby oznaczyć punkt w którym się znajdujemy literą S, a polanę literą P! Przydałby się też czas przejścia między punktami, w minutach, aby wybrać najoptymalniejszą drogę! Możesz także sprawdzić mapy z mojego zasobnika, może któraś z nich się nada!",
     options: [
       {
         text: "Podaj mapę (Max 3MB)",
@@ -130,33 +130,37 @@ export const dialogues: Dialogue = {
     ],
   },
   12: {
+    text: "To naprawdę dobrze wykonana mapa! Czy mogę ją zatrzymać i udostępnić przyszłym napotkanym osobom?",
+    options: [],
+  },
+  13: {
     text: "Komu w drogę temu czas!",
     options: [
       {
         text: "Wyruszajmy!",
-        next: 13,
-      },
-    ],
-  },
-  13: {
-    text: "",
-    options: [
-      {
-        text: "(Kontynuuj)",
         next: 14,
       },
     ],
   },
   14: {
-    text: "Jesteśmy na miejscu.",
+    text: "",
     options: [
       {
-        text: "Dzięki za pomoc! Tutaj jest na prawdę pięknie!",
+        text: "(Kontynuuj)",
         next: 15,
       },
     ],
   },
   15: {
+    text: "Jesteśmy na miejscu.",
+    options: [
+      {
+        text: "Dzięki za pomoc! Tutaj jest na prawdę pięknie!",
+        next: 16,
+      },
+    ],
+  },
+  16: {
     text: "Nie ma sprawy! Miło było znowu odwiedzić to miejsce! Do zobaczenia!",
     options: [],
   },
@@ -176,4 +180,31 @@ export async function fetchPath(
 
   if (data.status !== 200) return 400;
   return data.body.message;
+}
+
+export async function publishMap(
+  map: File
+): Promise<number | { distance: number; path: string[] }> {
+  const formData = new FormData();
+  formData.append("graph", map);
+  const response = await fetch("/api/publish", {
+    method: "POST",
+    body: formData,
+  });
+  if (!response.ok) return 400;
+  const data = await response.json();
+
+  if (data.status !== 200) return 400;
+  return data.body.message;
+}
+
+export async function fetchMaps(): Promise<
+  { id: number; data: Buffer; distance: number; path: string }[]
+> {
+  const response = await fetch("/api/maps");
+  if (!response.ok) return [];
+  const data = await response.json();
+
+  if (data.status !== 200) return [];
+  return data.body.maps;
 }
