@@ -1,6 +1,9 @@
-# Instalacja
+# UWAGA
+Zanim przystąpisz do pracy, przeczytaj całość instrukcji.
 
-W prawym górnym roku kliknij przycisk clone. Następnie skopiuj link który zostanie ci podany i do terminala wklej komendę git clone <link>, gdzie w miejsce link, wstaw skopiowany link. Upewnij się, że masz zainstalowane narzędzie git, jak i narzędzie npm i nodejs.
+## Klonowanie repozytorium
+
+W prawym górnym roku kliknij przycisk code. Następnie skopiuj link który zostanie ci podany i do terminala wklej komendę git clone <link>, gdzie w miejsce link, wstaw skopiowany link. Upewnij się, że masz zainstalowane narzędzie git, jak i narzędzia npm i nodejs.
 
 ## Instalacja bibliotek
 
@@ -47,7 +50,7 @@ W oknie terminala, w ścieżce folderu projektu, wywołaj komendę:
 ```
 npm run dev
 ```
-upewniając się jednak, że powyższe kroki zostały spełnione. Jeśli wszystko zadziałą poprawnie, projekt powinien uruchomić się pod adresem: 
+upewniając się jednak, że powyższe kroki zostały spełnione. Jeśli wszystko zadziała poprawnie, projekt powinien uruchomić się pod adresem: 
 ```
 localhost:3000
 ```
