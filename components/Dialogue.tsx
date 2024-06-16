@@ -18,7 +18,7 @@ const Typewriter = ({
   setIsTyping: Dispatch<SetStateAction<boolean>>;
 }) => {
   return (
-    <p className="font-poppins text-xl px-4 text-center">
+    <p className="font-poppins md:text-lg sm:text-sm px-4 text-center">
       {useTypewriter(text, speed, setIsTyping)}
     </p>
   );
@@ -95,7 +95,7 @@ export default function Dialogue() {
   }, []);
 
   return (
-    <div className="w-full h-full flex flex-col justify-between">
+    <div className="w-full h-full flex flex-col gap-4">
       {isDrawOpen && (
         <Canvas setIsOpen={setIsDrawOpen} isOpen={isDrawOpen} setMap={setMap} />
       )}
@@ -108,12 +108,12 @@ export default function Dialogue() {
         />
       )}
       <Typewriter text={dialogueText} speed={50} setIsTyping={setIsTyping} />
-      <div className="flex items-center justify-end gap-4">
+      <div className="flex items-center sm:justify-end justify-center sm:*:!w-fit *:!w-full flex-wrap md:text-lg sm:text-sm space-x-2">
         {isTyping ? null : dialogueNumber === 7 ? (
           <>
             <label
               htmlFor="mapa"
-              className="block cursor-pointer w-fit p-2 my-2 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg"
+              className="block cursor-pointer w-fit p-2 my-2 mx-0 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg text-center"
             >
               Podaj mapę (Max 3MB)
             </label>
@@ -133,7 +133,7 @@ export default function Dialogue() {
               onClick={() => {
                 setIsDrawOpen(true);
               }}
-              className="block w-fit p-2 my-2 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg"
+              className="block w-fit p-2 my-2 mx-0 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg text-center"
             >
               Narysuj mapę
             </button>
@@ -141,7 +141,7 @@ export default function Dialogue() {
               onClick={() => {
                 setIsCommunityMapsOpen(true);
               }}
-              className="block w-fit p-2 my-2 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg"
+              className="block w-fit text-center p-2 my-2 mx-0 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg"
             >
               Wyszukaj z map użytkowników
             </button>
@@ -153,7 +153,7 @@ export default function Dialogue() {
                 if (map) publishMap(map);
                 setDialogueNumber(13);
               }}
-              className="block w-fit p-2 my-2 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg"
+              className="block w-fit p-2 my-2 mx-0 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg text-center"
             >
               Jasne!
             </button>
@@ -161,7 +161,7 @@ export default function Dialogue() {
               onClick={() => {
                 setDialogueNumber(13);
               }}
-              className="block w-fit p-2 my-2 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg"
+              className="block w-fit p-2 my-2 mx-0 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg text-center"
             >
               Może lepiej nie!
             </button>
@@ -174,7 +174,7 @@ export default function Dialogue() {
                 setDialogueNumber(choice.next);
                 setHasChosenOption(true);
               }}
-              className="block w-fit p-2 my-2 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg"
+              className="block w-fit text-center p-2 my-2 mx-0 bg-orange-700 hover:bg-orange-600 transition-colors text-white rounded-lg"
             >
               {choice.text}
             </button>

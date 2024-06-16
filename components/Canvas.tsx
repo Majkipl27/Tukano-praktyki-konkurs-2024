@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import CanvasDraw from "react-canvas-draw";
 import { Dialog, DialogContent } from "./ui/dialog";
 
@@ -13,7 +13,24 @@ export default function Canvas({
   setIsOpen: (isOpen: boolean) => void;
   setMap: (map: File) => void;
 }) {
+  const [viewportWidth, setViewportWidth] = useState<number>(window.innerWidth);
+  const [viewportHeight, setViewportHeight] = useState<number>(
+    window.innerHeight
+  );
   const firstCanvas = useRef<any>(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+      setViewportHeight(window.innerHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const clear = () => {
     firstCanvas.current.clear();
@@ -50,6 +67,7 @@ export default function Canvas({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
         <p>Disclaimer: Gemini AI może nie analizować rysunku poprawnie</p>
+        <p>Disclaimer 2: Na telefonie nie wygodnie się rysuje</p>
         <div className="flex items-center justify-center gap-4">
           <button
             onClick={clear}
@@ -71,8 +89,8 @@ export default function Canvas({
           </button>
         </div>
         <CanvasDraw
-          canvasWidth={1000}
-          canvasHeight={800}
+          canvasWidth={viewportWidth * 0.8}
+          canvasHeight={viewportHeight * 0.6}
           hideGrid={true}
           brushRadius={1}
           enablePanAndZoom={true}
