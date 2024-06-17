@@ -3,19 +3,14 @@ Zanim przystąpisz do pracy, przeczytaj całość instrukcji.
 
 ## Klonowanie repozytorium
 
-W prawym górnym roku kliknij przycisk code. Następnie skopiuj link który zostanie ci podany i do terminala wklej komendę git clone <link>, gdzie w miejsce link, wstaw skopiowany link. Upewnij się, że masz zainstalowane narzędzie git, jak i narzędzia npm i nodejs.
+W prawym górnym roku kliknij przycisk code. Następnie skopiuj link który zostanie ci podany i do terminala wklej komendę git clone <link>, gdzie w miejsce link, wstaw skopiowany link. Upewnij się, że masz zainstalowane narzędzie git, jak i narzędzia nodejs i pnpm.
 
 ## Instalacja bibliotek
 
 W tym samym terminalu, wejdź w folder, gdzie zostało skopiowane repozytorium. Następnie wywołaj komendę aby zainstalować niezbędne pakiety:
 ```
-npm i
-```
-lub
-```
 pnpm i
 ```
-W zależności, z którego menadżera pakietów nodejs korzystasz.
 
 ## Stwórz bazę danych
 
@@ -48,11 +43,11 @@ Plik ten umieść w głównym katalogu projektu.
 ## Uruchamianie aplikacji
 W oknie terminala, w ścieżce folderu projektu, wywołaj komendę:
 ```
-npm next build
+pnpm next build
 ```
 a po zakończeniu
 ```
-npm next start
+pnpm next start
 ```
 upewniając się jednak, że powyższe kroki zostały spełnione. Jeśli wszystko zadziała poprawnie, projekt powinien uruchomić się pod adresem: 
 ```
