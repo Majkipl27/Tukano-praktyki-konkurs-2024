@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { analyzeGraph } from "../analize/route";
+import { analyzeGraph } from "../analize/lib";
 import { Edge, dijkstra } from "../analize/dijkstra";
 import { pool } from "../lib/database";
 

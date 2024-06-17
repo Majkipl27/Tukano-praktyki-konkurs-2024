@@ -48,7 +48,11 @@ Plik ten umieść w głównym katalogu projektu.
 ## Uruchamianie aplikacji
 W oknie terminala, w ścieżce folderu projektu, wywołaj komendę:
 ```
-npm run dev
+npm next build
+```
+a po zakończeniu
+```
+npm next start
 ```
 upewniając się jednak, że powyższe kroki zostały spełnione. Jeśli wszystko zadziała poprawnie, projekt powinien uruchomić się pod adresem: 
 ```
